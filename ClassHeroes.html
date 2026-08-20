@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClassHeroes - KVS Teacher's Day</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* CUSTOM SCROLLBAR FOR ALL CONTAINERS */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #ff9f43, #ee5253);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 159, 67, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #feca57, #ff9f43);
+        }
+
+        /* Firefox Scrollbar Support */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #ff9f43 rgba(255, 255, 255, 0.05);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 215, 0, 0.25);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 650px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Class Heroes Big Heading for Entry Screen */
+        .hero-main-title {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6), 2px 2px 4px rgba(0, 0, 0, 0.8);
+            margin: 20px 0 30px 0;
+            animation: titlePulse 2s infinite alternate;
+        }
+
+        @keyframes titlePulse {
+            0% { transform: scale(1); text-shadow: 0 0 10px #ffd700; }
+            100% { transform: scale(1.05); text-shadow: 0 0 25px #ff9f43, 0 0 35px #ffd700; }
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            color: #00d2d3;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        h1.school-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ff9f43;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            margin-bottom: 25px;
+        }
+
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        /* ANIMATED BUTTON BASE CLASS */
+        .btn {
+            background: linear-gradient(135deg, #ff9f43, #ee5253);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            -webkit-tap-highlight-color: transparent;
+            animation: bounce 1.8s infinite alternate ease-in-out;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(238, 82, 83, 0.6);
+        }
+
+        /* Trophy Continue Button */
+        .btn-trophy {
+            background: linear-gradient(135deg, #ffd700, #ff9f43);
+            color: #1e272e;
+            font-size: 1.2rem;
+            padding: 16px 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin: 20px 0;
+            animation: bounce 1.5s infinite alternate;
+        }
+
+        .btn-trophy:hover {
+            background: linear-gradient(135deg, #fff7a0, #ffd700);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+        }
+
+        /* Staggered Bounce Animation Delays for Smooth Wave Effect */
+        .btn-delay-1 { animation-delay: 0.2s; }
+        .btn-delay-2 { animation-delay: 0.4s; }
+        .btn-delay-3 { animation-delay: 0.6s; }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #feca57, #ff9f43);
+            color: #222;
+        }
+
+        .btn-reset:hover {
+            box-shadow: 0 8px 25px rgba(254, 202, 87, 0.7);
+        }
+
+        .btn-surprise {
+            background: linear-gradient(135deg, #10ac84, #1dd1a1);
+            color: white;
+        }
+
+        .btn-surprise:hover {
+            box-shadow: 0 8px 25px rgba(29, 209, 161, 0.7);
+        }
+
+        .btn-game {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+        }
+
+        .btn-game:hover {
+            box-shadow: 0 8px 25px rgba(155, 89, 182, 0.7);
+        }
+
+        .btn-wiki {
+            background: linear-gradient(135deg, #0abde3, #48dbfb);
+            color: #000;
+        }
+
+        .btn-wiki:hover {
+            box-shadow: 0 8px 25px rgba(72, 219, 251, 0.7);
+        }
+
+        /* Search Section */
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 25px;
+            border: 2px solid #ff9f43;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            outline: none;
+            margin-bottom: 15px;
+        }
+
+        .search-results {
+            list-style: none;
+            max-height: 200px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .search-results li {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.2s;
+        }
+
+        .search-results li:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Animated Special Teacher Card */
+        .special-teacher-card {
+            background: rgba(255, 159, 67, 0.2);
+            border: 2px dashed #feca57;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            animation: pulseGlow 1.5s infinite alternate;
+        }
+
+        .special-teacher-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #feca57;
+        }
+
+        /* Animated 404 Error Card */
+        .error-404-card {
+            background: rgba(238, 82, 83, 0.25);
+            border: 2px solid #ff4757;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .error-404-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 5px;
+        }
+
+        .error-404-text {
+            font-size: 0.95rem;
+            color: #ffffff;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(0.98); box-shadow: 0 0 5px #feca57; }
+            100% { transform: scale(1.02); box-shadow: 0 0 20px #ff9f43; }
+        }
+
+        /* Cursive List */
+        .cursive-list {
+            list-style: none;
+            text-align: left;
+            margin: 20px 0;
+            max-height: 280px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-right: 8px;
+        }
+
+        .cursive-list li {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #feca57;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: transform 0.2s, color 0.2s;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+        }
+
+        .cursive-list li:hover {
+            transform: scale(1.02);
+            color: #ffffff;
+        }
+
+        /* Detail Display */
+        .details-card {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .details-card h2 {
+            color: #feca57;
+            margin-bottom: 10px;
+        }
+
+        .details-card p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* Tic Tac Toe Game Styling */
+        .game-status {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #feca57;
+            margin: 15px 0;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 0 auto 20px auto;
+        }
+
+        .cell {
+            width: 90px;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cell:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.03);
+        }
+
+        .cell.x { color: #ff9f43; }
+        .cell.o { color: #0abde3; }
+
+        /* Wikipedia Section */
+        .wiki-content {
+            text-align: left;
+            max-height: 320px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .wiki-content ul {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+
+        .wiki-content li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #c8d6e5;
+        }
+
+        .disclaimer-note {
+            font-size: 0.85rem;
+            color: #c8d6e5;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        /* Footer Animation */
+        .footer-text {
+            margin-top: 25px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                color: #ffffff;
+                text-shadow: 0 0 5px #ff9f43;
+            }
+            100% {
+                color: #feca57;
+                text-shadow: 0 0 15px #ee5253, 0 0 20px #feca57;
+            }
+        }
+
+        /* Celebration Animation */
+        .celebration-banner {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.3rem;
+            color: #feca57;
+            margin: 20px 0;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-8px); }
+        }
+
+        /* Responsive Tweaks */
+        @media (max-width: 768px) {
+            .container { padding: 25px 18px; }
+            .hero-main-title { font-size: 2.4rem; }
+            h1.school-title { font-size: 1.6rem; }
+            .cursive-list li { font-size: 1.6rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-main-title { font-size: 2rem; }
+            h1.school-title { font-size: 1.3rem; }
+            .cursive-list li { font-size: 1.4rem; }
+            .celebration-banner { font-size: 1.6rem; }
+            .container { padding: 20px 15px; }
+            .cell { width: 80px; height: 80px; font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- FIRST MAIN MENU: ENTRY HERO SCREEN -->
+        <div id="hero-menu" class="view-section active">
+            <h1 class="hero-main-title">ClassHeroes</h1>
+            
+            <button class="btn btn-trophy" onclick="showSection('main-menu')">
+                <span>🏆</span> Press me to Continue
+            </button>
+
+            <div class="footer-text" style="margin-top: 40px;">
+                Created by Ashutosh Mandal
+            </div>
+        </div>
+
+        <!-- SECONDARY MAIN MENU: KVS NAVIGATION -->
+        <div id="main-menu" class="view-section">
+            <div class="project-title">ClassHeroes</div>
+            <h1 class="school-title">KENDRIYA VIDYALAYA SANGATHAN</h1>
+            <div class="btn-group">
+                <button class="btn" onclick="showSection('search-view')">Enter Your Name</button>
+                <button class="btn btn-delay-1" onclick="showSection('list-view')">Best Teachers List</button>
+                <button class="btn btn-wiki btn-delay-2" onclick="showSection('wiki-view')">Wikipedia (Teacher's Day)</button>
+                <button class="btn btn-reset btn-delay-3" onclick="resetToMenu()">Reset</button>
+            </div>
+            <div class="footer-text">
+                TEACHER'S DAY CELEBRATION (KVS)<br>
+                Created by Ashutosh Mandal
+            </div>
+        </div>
+
+        <!-- SEARCH VIEW -->
+        <div id="search-view" class="view-section">
+            <div class="project-title">ClassHeroes</div>
+            <h1 class="school-title">KENDRIYA VIDYALAYA SANGATHAN</h1>
+            <input type="text" id="teacher-search" class="search-box" placeholder="Type your name here..." oninput="handleSearch()">
+            
+            <!-- Special Teacher Card -->
+            <div id="special-animation-box" style="display: none;" class="special-teacher-card">
+                <p class="special-teacher-text">Searching Data Base Result Not Found Because He is the best Teacher Of World 🙂</p>
+            </div>
+
+            <!-- 404 Error Card -->
+            <div id="error-404-box" style="display: none;" class="error-404-card">
+                <div class="error-404-title">⚠️ 404 Not Found</div>
+                <div class="error-404-text">Please Enter Correct Name Or Don't Try</div>
+            </div>
+
+            <ul id="search-results-list" class="search-results"></ul>
+            <div class="btn-group">
+                <button class="btn" onclick="showSection('main-menu')">Back</button>
+                <button class="btn btn-reset btn-delay-1" onclick="resetToMenu()">Reset</button>
+            </div>
+            <div class="footer-text">
+                TEACHER'S DAY CELEBRATION (KVS)<br>
+                Created by Ashutosh Mandal
+            </div>
+        </div>
+
+        <!-- BEST TEACHERS LIST VIEW -->
+        <div id="list-view" class="view-section">
+            <div class="project-title">ClassHeroes</div>
+            <h2 style="color: #feca57;">Our Best Teachers</h2>
+            <ul class="cursive-list" id="full-teachers-list"></ul>
+            <div class="disclaimer-note">I Don’t Add Other Teacher Names Because I Don’t Have Time 😀😀</div>
+            <div class="btn-group">
+                <button class="btn" onclick="showSection('main-menu')">Back</button>
+                <button class="btn btn-reset btn-delay-1" onclick="resetToMenu()">Reset</button>
+            </div>
+            <div class="footer-text">
+                TEACHER'S DAY CELEBRATION (KVS)<br>
+                Created by Ashutosh Mandal
+            </div>
+        </div>
+
+        <!-- DETAILS VIEW -->
+        <div id="detail-view" class="view-section">
+            <div class="project-title">ClassHeroes</div>
+            <div class="details-card">
+                <h2 id="detail-name"></h2>
+                <p id="detail-description"></p>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-surprise" onclick="triggerSurprise()">Surprise Me!</button>
+                <button class="btn btn-game btn-delay-1" onclick="startTicTacToe()">Beat AI in Tic Tac Toe</button>
+                <button class="btn btn-delay-2" onclick="showSection('list-view')">Back</button>
+                <button class="btn btn-reset btn-delay-3" onclick="resetToMenu()">Reset</button>
+            </div>
+            <div class="footer-text">
+                TEACHER'S DAY CELEBRATION (KVS)<br>
+                Created by Ashutosh Mandal
+            </div>
+        </div>
+
+        <!-- TIC TAC TOE GAME VIEW -->
+        <div id="game-view" class="view-section">
+            <div class="project-title">ClassHeroes</div>
+            <h2 style="color: #feca57; margin-bottom: 5px;">Teacher vs AI</h2>
+            <div class="game-status" id="game-status">Your turn! (X)</div>
+            
+            <div class="board" id="board">
+                <div class="cell" onclick="makeMove(0)"></div>
+                <div class="cell" onclick="makeMove(1)"></div>
+                <div class="cell" onclick="makeMove(2)"></div>
+                <div class="cell" onclick="makeMove(3)"></div>
+                <div class="cell" onclick="makeMove(4)"></div>
+                <div class="cell" onclick="makeMove(5)"></div>
+                <div class="cell" onclick="makeMove(6)"></div>
+                <div class="cell" onclick="makeMove(7)"></div>
+                <div class="cell" onclick="makeMove(8)"></div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-surprise" onclick="resetGame()">Restart Game</button>
+                <button class="btn btn-delay-1" onclick="showSection('detail-view')">Back</button>
+                <button class="btn btn-reset btn-delay-2" onclick="resetToMenu()">Reset</button>
+            </div>
+            <div class="footer-text">
+                TEACHER'S DAY CELEBRATION (KVS)<br>
+                Created by Ashutosh Mandal
+            </div>
+        </div>
+
+        <!-- SURPRISE VIEW -->
+        <div id="surprise-view" class="view-section">
+            <div class="project-title">ClassHeroes</div>
+            <div class="celebration-banner" id="surprise-message"></div>
+            <div style="font-size: 3.5rem; margin: 15px 0;">🎉💐✨</div>
+            <div class="btn-group">
+                <button class="btn" onclick="showSection('detail-view')">Back</button>
+                <button class="btn btn-reset btn-delay-1" onclick="resetToMenu()">Reset</button>
+            </div>
+            <div class="footer-text" style="margin-top: 25px;">
+                Created by Ashutosh Mandal Thank You
+            </div>
+        </div>
+
+        <!-- WIKIPEDIA VIEW -->
+        <div id="wiki-view" class="view-section">
+            <div class="project-title">ClassHeroes</div>
+            <h2 style="color: #feca57; margin-bottom: 10px;">Why We Celebrate Teacher's Day</h2>
+            <div class="wiki-content">
+                <ul>
+                    <li>Dr. Sarvepalli Radhakrishnan was a great scholar, philosopher, and dedicated teacher of India.</li>
+                    <li>He was born on September 5, 1888, in Tiruttani, Tamil Nadu.</li>
+                    <li>His birthday is celebrated across India every year as Teachers' Day.</li>
+                    <li>He served as the first Vice President of independent India from 1952 to 1962.</li>
+                    <li>He then became the second President of India, serving from 1962 to 1967.</li>
+                    <li>He rose from a very humble background to become a world-renowned academician.</li>
+                    <li>He was a brilliant student who earned a master's degree in Philosophy from Madras Christian College.</li>
+                    <li>He taught at prestigious institutions like the University of Mysore, University of Calcutta, and Oxford University.</li>
+                    <li>He acted as a bridge between Eastern and Western thought, introducing Indian philosophy to the world.</li>
+                    <li>In 1954, the Indian government honored him with the Bharat Ratna, India's highest civilian award.</li>
+                    <li>When he became President, his students wanted to celebrate his birthday.</li>
+                    <li>He requested them instead to observe September 5th as Teachers' Day to honor all educators.</li>
+                    <li>The tradition of celebrating Teachers' Day in India officially began in 1962.</li>
+                    <li>He firmly believed that "teachers should be the best minds in the country".</li>
+                    <li>He maintained that true teachers do not just give information, but help us think for ourselves.</li>
+                    <li>He viewed education as a transformative tool to shape human character and society.</li>
+                    <li>Beyond politics and teaching, he served as India's ambassador to the Soviet Union.</li>
+                    <li>He passed away on April 17, 1975, leaving behind a timeless legacy of wisdom.</li>
+                    <li>Teachers' Day reminds us of his deep love, dedication, and respect for the teaching profession.</li>
+                    <li>His life continues to inspire both students and teachers to strive for knowledge and humility.</li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="showSection('main-menu')">Back</button>
+                <button class="btn btn-reset btn-delay-1" onclick="resetToMenu()">Reset</button>
+            </div>
+            <div class="footer-text">
+                TEACHER'S DAY CELEBRATION (KVS)<br>
+                Created by Ashutosh Mandal
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const teachers = [
+            { name: "Sumanta Kumar Behera", desc: "A Teacher Who is very Reliability & Kindness" },
+            { name: "Shailendra Pratap Yadav", desc: "A Teacher Who Very Patience" },
+            { name: "Ashish Prajapati", desc: "A Teacher Who is very Reliability & Creative" },
+            { name: "Satyaban Sahoo", desc: "A Teacher Who is very Confident" },
+            { name: "Sourita Dey", desc: "A Teacher Who is very Kind" },
+            { name: "Kajal Rani", desc: "A Teacher Who is Very Confidence" },
+            { name: "Junior Computer sir", desc: "Cool & Chill Teacher" },
+            { name: "Shubham Sekhar Majhi", desc: "A Teacher Who is very Confidence & Creative" },
+            { name: "Kaveri Yadav", desc: "A Teacher Who is very Creative" },
+            { name: "Rani Sahu", desc: "A Teacher Who is Taking Things Very Adaptability" }
+        ];
+
+        let selectedTeacher = null;
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function resetToMenu() {
+            document.getElementById('teacher-search').value = '';
+            document.getElementById('search-results-list').innerHTML = '';
+            document.getElementById('special-animation-box').style.display = 'none';
+            document.getElementById('error-404-box').style.display = 'none';
+            selectedTeacher = null;
+            showSection('hero-menu');
+        }
+
+        function populateList() {
+            const listEl = document.getElementById('full-teachers-list');
+            listEl.innerHTML = '';
+            teachers.forEach((t, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${index + 1}. ${t.name}`;
+                li.onclick = () => selectTeacher(t);
+                listEl.appendChild(li);
+            });
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('teacher-search').value.toLowerCase().trim();
+            const resultsEl = document.getElementById('search-results-list');
+            const specialBox = document.getElementById('special-animation-box');
+            const errorBox = document.getElementById('error-404-box');
+            
+            resultsEl.innerHTML = '';
+            specialBox.style.display = 'none';
+            errorBox.style.display = 'none';
+
+            if (query === '') return;
+
+            if (query.includes('gobardhan') || query.includes('mundari')) {
+                specialBox.style.display = 'block';
+                return;
+            }
+
+            const filtered = teachers.filter(t => t.name.toLowerCase().includes(query));
+
+            if (filtered.length === 0) {
+                errorBox.style.display = 'block';
+            } else {
+                filtered.forEach(t => {
+                    const li = document.createElement('li');
+                    li.textContent = t.name;
+                    li.onclick = () => selectTeacher(t);
+                    resultsEl.appendChild(li);
+                });
+            }
+        }
+
+        function selectTeacher(teacher) {
+            selectedTeacher = teacher;
+            document.getElementById('detail-name').textContent = teacher.name;
+            document.getElementById('detail-description').textContent = teacher.desc;
+            showSection('detail-view');
+        }
+
+        function triggerSurprise() {
+            if (selectedTeacher) {
+                document.getElementById('surprise-message').textContent = `Happy Teacher's Day ${selectedTeacher.name}!`;
+                showSection('surprise-view');
+            }
+        }
+
+        /* TIC TAC TOE LOGIC */
+        let gameState = ["", "", "", "", "", "", "", "", ""];
+        let isGameActive = true;
+        const winPatterns = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
+        ];
+
+        function startTicTacToe() {
+            resetGame();
+            showSection('game-view');
+        }
+
+        function resetGame() {
+            gameState = ["", "", "", "", "", "", "", "", ""];
+            isGameActive = true;
+            document.getElementById('game-status').textContent = selectedTeacher ? `${selectedTeacher.name}'s turn! (X)` : "Your turn! (X)";
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                cell.textContent = '';
+                cell.classList.remove('x', 'o');
+            });
+        }
+
+        function makeMove(index) {
+            if (gameState[index] !== "" || !isGameActive) return;
+
+            gameState[index] = "X";
+            updateCell(index, "X");
+
+            if (checkWin("X")) {
+                document.getElementById('game-status').textContent = selectedTeacher ? `🏆 ${selectedTeacher.name} Beats AI!` : "🏆 You Beat AI!";
+                isGameActive = false;
+                return;
+            }
+
+            if (gameState.every(cell => cell !== "")) {
+                document.getElementById('game-status').textContent = "🤝 It's a Tie!";
+                isGameActive = false;
+                return;
+            }
+
+            document.getElementById('game-status').textContent = "AI is thinking...";
+            isGameActive = false;
+
+            setTimeout(aiMove, 600);
+        }
+
+        function aiMove() {
+            let emptyCells = gameState.map((val, idx) => val === "" ? idx : null).filter(val => val !== null);
+            if (emptyCells.length === 0) return;
+
+            // Simple AI: Pick winning move, or block player winning move, or pick random
+            let move = findBestMove("O") || findBestMove("X") || emptyCells[Math.floor(Math.random() * emptyCells.length)];
+
+            gameState[move] = "O";
+            updateCell(move, "O");
+
+            if (checkWin("O")) {
+                document.getElementById('game-status').textContent = "🤖 AI Wins! Try again!";
+                isGameActive = false;
+                return;
+            }
+
+            if (gameState.every(cell => cell !== "")) {
+                document.getElementById('game-status').textContent = "🤝 It's a Tie!";
+                isGameActive = false;
+                return;
+            }
+
+            document.getElementById('game-status').textContent = selectedTeacher ? `${selectedTeacher.name}'s turn! (X)` : "Your turn! (X)";
+            isGameActive = true;
+        }
+
+        function findBestMove(player) {
+            for (let pattern of winPatterns) {
+                let [a, b, c] = pattern;
+                let values = [gameState[a], gameState[b], gameState[c]];
+                if (values.filter(v => v === player).length === 2 && values.includes("")) {
+                    return pattern[values.indexOf("")];
+                }
+            }
+            return null;
+        }
+
+        function updateCell(index, player) {
+            const cell = document.querySelectorAll('.cell')[index];
+            cell.textContent = player;
+            cell.classList.add(player.toLowerCase());
+        }
+
+        function checkWin(player) {
+            return winPatterns.some(pattern => {
+                return pattern.every(index => gameState[index] === player);
+            });
+        }
+
+        // Initialize List on Load
+        populateList();
+    </script>
+</body>
+</html>
